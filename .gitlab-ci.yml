@@ -1,7 +1,7 @@
   variables:
   API_TOKEN: $DEPLOYMENT_TOKEN
   APP_PATH: '$CI_PROJECT_DIR/src'
-  OUTPUT_PATH: '$CI_PROJECT_DIR/dist/web-speech-angular'
+  OUTPUT_PATH: 'wwwroot'
 
 deploy:
   stage: deploy
