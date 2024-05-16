@@ -21,7 +21,7 @@ export interface SearchVideoItem {
 })
 export class SearchService {
   private apiUrl = 'https://func-curatorai.azurewebsites.net/query-prompt-docs?prompt=';
-  private videoAPIurl = 'https://func-curatorai.azurewebsites.net/promptToVideo?prompt=';
+  private videoAPIurl = 'https://func-curatorai.azurewebsites.net/query-prompt-videos?prompt=';
 
   constructor(private http: HttpClient) { }
 
