@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SearchItem, SearchVideoItem, SearchService } from './services/search.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,12 @@ export class SearchDocComponent implements OnInit {
   searchedItems: Observable<any[] | undefined> = of([]);
   searchedVideoItems: Observable<any[] | undefined> = of([]);
 
-  constructor(private route: ActivatedRoute, private searchService: SearchService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private searchService: SearchService) {
+      
+    }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -39,17 +44,21 @@ export class SearchDocComponent implements OnInit {
         }));
 
     this.searchedVideoItems = this.searchVideoItemsBasedOnPrompt(this.searchText)
-    .pipe(
-      map((data: any) => {
-        return (Object.values(data?.results[0]?.searchMatches[0]) as Array<SearchVideoItem[]>)
-          .flat()
-          .map((item: SearchVideoItem) => ({
-            title: item.type,
-            subtitle: `Page: ${item.startTime}`,
-            description: item.text
+      .pipe(
+        map((data: any) => {
+          return JSON.parse(data).results.map((item: SearchVideoItem) => {
+              return {
+                title: item.name,
+                subtitle: `Acc ID: ${item.accountId}`,
+                description: item.searchMatches.map(match=>match.startTime).join(', ')
+            };
           })
-        );
-      }));
+        })
+      );
+  }
+
+  navigateToVideoPlayer(accountId: string, videoId: string) {
+    this.router.navigate(['/video-player', accountId, videoId]);
   }
 
   searchItemsBasedOnPrompt(prompt: string) {

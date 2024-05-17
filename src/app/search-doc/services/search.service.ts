@@ -11,9 +11,15 @@ export interface SearchItem {
 }
 
 export interface SearchVideoItem {
-  text: string,
+  accountId: string,
+  name: string,
+  searchMatches: SearchMatch[]
+}
+
+export interface SearchMatch {
   startTime: string,
-  type: string
+  type: string,
+  text: string
 }
 
 @Injectable({
