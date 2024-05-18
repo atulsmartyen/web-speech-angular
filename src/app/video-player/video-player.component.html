@@ -1,15 +1,29 @@
 
 <div class="container">
     <div class="video-container">
-        <iframe
+        <!-- <iframe
             width="100%"
             height="600"
+            [src]="videoUrl"
+            frameborder="0"
+            allowfullscreen>
+        </iframe> -->
+        <iframe
+            width="100%"
+            height="315"
             [src]="videoUrl"
             frameborder="0"
             allowfullscreen>
         </iframe>
     </div>
     <div class="insight-container">
-        <div id="container" class="widget-container"></div>
+        <!-- <div id="container" class="widget-container"></div> -->
+        <iframe
+            width="100%"
+            height="90%"
+            [src]="insightsUrl"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
     </div>
 </div>

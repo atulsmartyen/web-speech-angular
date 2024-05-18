@@ -28,6 +28,7 @@ export class VideoPlayerComponent implements OnInit {
   accountId: string = '';
   videoId: string = '';
   videoUrl: SafeUrl = '';
+  insightsUrl: SafeUrl = '';
   accessToken: string = '';
 
   constructor(
@@ -42,6 +43,7 @@ export class VideoPlayerComponent implements OnInit {
       this.accountId = params.get('accountId') ?? '' ;
       this.videoId = params.get('videoId') ?? '';
       this.videoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getVideoUrl());
+      this.insightsUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getInsightsUrl());
     });
   }
 
@@ -78,6 +80,10 @@ export class VideoPlayerComponent implements OnInit {
   getVideoUrl(): string {
     this.accessToken = this.searchService.videoToken;
     return `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial`;
+  }
+
+  getInsightsUrl(): string {
+    return `https://www.videoindexer.ai/embed/insights/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial`;
   }
 
   public get apiVersion() {
