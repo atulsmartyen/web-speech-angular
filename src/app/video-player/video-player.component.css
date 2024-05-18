@@ -3,3 +3,18 @@
   width: 100%;
   height: 100%;
 }
+
+.container {
+  display: flex;
+  height: 100vh; /* Full height of the viewport */
+}
+
+.video-container {
+  flex: 0.6; /* 60% width */
+  overflow: auto; /* Enable scroll if content overflows */
+}
+
+.insight-container {
+  flex: 0.4; /* 40% width */
+  overflow: auto; /* Enable scroll if content overflows */
+}

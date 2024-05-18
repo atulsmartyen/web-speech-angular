@@ -1,7 +1,15 @@
-<h1>Azure Video Indexer widgets</h1>
-<br><br>
-<h2>Insights widget:</h2>
-<div id="container" class="widget-container"></div>
-<br><br>
-<h2>Custom insights widget:</h2>
-<div id="custom-widget-container" class="widget-container"></div>
+
+<div class="container">
+    <div class="video-container">
+        <iframe
+            width="100%"
+            height="600"
+            [src]="videoUrl"
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div class="insight-container">
+        <div id="container" class="widget-container"></div>
+    </div>
+</div>
