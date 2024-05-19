@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchDocComponent implements OnInit {
+  panelOpenState = true;
   searchText: string = '';
   searchedItems: Observable<any[] | undefined> = of([]);
   searchedVideoItems: Observable<any[] | undefined> = of([]);
@@ -46,15 +47,25 @@ export class SearchDocComponent implements OnInit {
     this.searchedVideoItems = this.searchVideoItemsBasedOnPrompt(this.searchText)
       .pipe(
         map((data: any) => {
-          return JSON.parse(data).results.map((item: SearchVideoItem) => {
-              return {
-                title: item.name,
-                subtitle: `Acc ID: ${item.accountId}`,
-                videoId: item.thumbnailVideoId,
-                accountId: item.accountId,
-                description: item.searchMatches.map(match=>match.startTime).join(', ')
-            };
-          })
+          try {
+            const parsedData = JSON.parse(data);
+            console.log('Data:', JSON.parse(data));
+            return parsedData.results.map((item: SearchVideoItem) => {
+                return {
+                  title: item.name,
+                  subtitle: `Acc ID: ${item.accountId}`,
+                  videoId: item.thumbnailVideoId,
+                  accountId: item.accountId,
+                  description: [...item.searchMatches.map(match => {
+                    const matchObj = { startTime : match.startTime, text: match.text };
+                    return matchObj;
+                  })]
+              };
+            })
+          } catch (error) {
+            console.error('Error parsing data:', error);
+            return [];
+          }
         })
       );
   }

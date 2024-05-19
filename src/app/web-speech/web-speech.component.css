@@ -25,6 +25,19 @@ section {
   animation: soundwave 0.7s infinite;
 }
 
+.mat-fab {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.icon-display {
+  transform: scale(1.2);
+}
+
+.mic-panel { display: flex; flex-direction: row;}
+.mic-control { display: flex; flex: 1; width: 50%; align-items: center; justify-content: flex-end;}
+.mic-speech { display: flex; flex: 1; }
+
 @keyframes soundwave {
   from {
     opacity: 0.5;
