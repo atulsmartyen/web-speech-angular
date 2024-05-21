@@ -1,0 +1,24 @@
+
+
+  <mat-card-header *ngIf="!!videoItem">
+    <img mat-card-md-image (click)="navigateToVideoPlayer(videoItem.accountId, videoItem.videoId)" [src]="getVideoThumbneil(videoItem) | async" >
+    <mat-card-content>
+      <mat-card-title>{{ videoItem.title }}</mat-card-title>
+      <mat-card-subtitle>{{ videoItem.subtitle }}</mat-card-subtitle>
+    </mat-card-content>
+  </mat-card-header>
+  <mat-card-content class="video-card-content" *ngIf="!!videoItem">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ videoItem?.description?.length }} Key moments in this video</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-list-item *ngFor="let keyMoment of videoItem?.description">
+          <div class="key-moment">
+            <div class="key-moment_timestamp">{{ keyMoment?.startTime }}</div>
+            <div class="key-moment_disc">{{ keyMoment?.text }}</div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-card-content>

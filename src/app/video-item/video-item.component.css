@@ -1,0 +1,90 @@
+section {
+  padding: 15px;
+}
+
+mat-card {
+  margin: 15px 0px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-list {
+  display: flex;
+  flex-direction: row;
+  height: 140px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.key-moment {
+  width: 140px;
+  height: 60px;
+}
+
+.key-moment_timestamp {
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.key-moment_disc {
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+  white-space: wrap;
+  overflow: hidden;
+  max-height: 100px;
+}
+
+.mat-expansion-panel-header {
+  padding: 0 10px;
+  font-size: 0.8rem;
+  font-weight: semibold;
+}
+
+.mat-list-item {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+}
+
+.mat-card-md-image:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.video-card-content {
+  margin-top: 10x;
+}
+
+.mat-card-header-text {
+  margin-left: 0px !important;
+}
+
+.mat-card-md-image {
+  width: 112px;
+  height: 80px;
+  margin-right: 20px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+.serach-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  mat-form-field {
+    flex: 1;
+    padding-right: 1rem;
+  }
+}

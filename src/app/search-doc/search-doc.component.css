@@ -5,6 +5,7 @@
   mat-card {
     margin: 15px 0px;
   }
+
   .example-form {
     min-width: 150px;
     max-width: 500px;
@@ -25,8 +26,11 @@
   }
 
   .key-moment {
-    width: 140px;
-    height: 60px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 140px;
+    height: 100%;
   }
 
   .key-moment_timestamp {
@@ -39,7 +43,7 @@
     text-overflow: ellipsis;
     white-space: wrap;
     overflow: hidden;
-    max-height: 100px;
+    height: 100px;
   }
 
   .mat-expansion-panel-header {
@@ -74,6 +78,15 @@
     margin-right: 20px;
     margin-left: 0px;
     cursor: pointer;
+  }
+
+  .doc-img {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .doc-title { 
+    margin-top: 10px !important;
   }
 
   .serach-controls {

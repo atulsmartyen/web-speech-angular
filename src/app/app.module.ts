@@ -24,6 +24,6 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
     SearchDocModule
   ],
   providers: [],
-  bootstrap: [AppComponent, VideoPlayerComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

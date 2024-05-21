@@ -10,38 +10,39 @@
     <mat-tab label="Documents">
       <ng-template matTabContent>
         <mat-card *ngFor="let item of (searchedItems | async)">
-          <mat-card-title>{{ item.title }}</mat-card-title>
+          <!-- <mat-card-title>{{ item.title }}</mat-card-title>
           <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
           <mat-card-content>
             <p>{{ item.description }}</p>
+          </mat-card-content> -->
+          <mat-card-header *ngIf="!!item">
+            <img mat-card-md-image class="doc-img" src="../../assets/images/doc_logo.jpg" >
+            <mat-card-content>
+              <mat-card-title class="doc-title">{{ item[0].title }}</mat-card-title>
+              <!-- <mat-card-subtitle>{{ item[0].subtitle }}</mat-card-subtitle> -->
+            </mat-card-content>
+          </mat-card-header>
+          <mat-card-content class="video-card-content" *ngIf="!!item">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ item?.length }} Key moments in this video</mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list>
+                <mat-list-item *ngFor="let keyMoment of item" [title]="keyMoment?.description">
+                  <div class="key-moment">
+                    <div class="key-moment_timestamp">{{ keyMoment?.subtitle }}</div>
+                    <div class="key-moment_disc">{{ keyMoment?.description }}</div>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
           </mat-card-content>
         </mat-card>
       </ng-template>
     </mat-tab>
     <mat-tab label="Videos">
       <mat-card class="video-card" *ngFor="let item of (searchedVideoItems | async)">
-        <mat-card-header>
-          <img mat-card-md-image (click)="navigateToVideoPlayer(item.accountId, item.videoId)" src="../../assets/images/static-video-thumbneil.png" >
-          <mat-card-content>
-            <mat-card-title>{{ item.title }}</mat-card-title>
-            <mat-card-subtitle>{{ item.subtitle }}</mat-card-subtitle>
-          </mat-card-content>
-        </mat-card-header>
-        <mat-card-content class="video-card-content">
-          <mat-expansion-panel [expanded]="true">
-            <mat-expansion-panel-header>
-              <mat-panel-title>{{ item?.description?.length }} Key moments in this video</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list>
-              <mat-list-item *ngFor="let keyMoment of item?.description">
-                <div class="key-moment">
-                  <div class="key-moment_timestamp">{{ keyMoment?.startTime }}</div>
-                  <div class="key-moment_disc">{{ keyMoment?.text }}</div>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-card-content>
+        <video-item *ngIf="!!item.accountId" [videoItem]="item"></video-item>
       </mat-card>
     </mat-tab>
   </mat-tab-group>
