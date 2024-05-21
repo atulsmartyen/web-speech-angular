@@ -1,5 +1,20 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  height: 100vh /* Full height of the viewport */
+}
+
+.video-container {
+  flex: 0.5; /* 60% width */
+  overflow: auto; /* Enable scroll if content overflows */
+}
+
+.insight-container {
+  flex: 0.5; /* 40% width */
+  overflow: auto; /* Enable scroll if content overflows */
 }
