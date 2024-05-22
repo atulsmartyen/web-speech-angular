@@ -17,11 +17,6 @@ export class VideoItemComponent {
     private router: Router,
     private searchService: SearchService) {}
 
-  getVideoThumbneil(item: any): Observable<string> {
-    const { accountId, videoId, thumbnailId } = item;
-    return this.searchService.getThumbnail(accountId, videoId, thumbnailId);
-  }
-
   getThumbnailLink(item: any) {
     const { accountId, videoId, thumbnailId } = item;
     return this.searchService.getThumbnailLink(accountId, videoId, thumbnailId);
