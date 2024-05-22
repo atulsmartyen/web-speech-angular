@@ -22,6 +22,11 @@ export class VideoItemComponent {
     return this.searchService.getThumbnail(accountId, videoId, thumbnailId);
   }
 
+  getThumbnailLink(item: any) {
+    const { accountId, videoId, thumbnailId } = item;
+    return this.searchService.getThumbnailLink(accountId, videoId, thumbnailId);
+  }
+
   navigateToVideoPlayer(accountId: string, videoId: string) {
     this.router.navigate(['/video-player', accountId, videoId]);
   }
