@@ -17,7 +17,8 @@
       </mat-expansion-panel-header>
       <mat-list>
         <mat-list-item *ngFor="let keyMoment of videoItem?.description">
-          <div class="key-moment" (click)="onSelectKeyMoment(keyMoment, videoItem.accountId, videoItem.videoId)">
+          <div class="key-moment"
+            (click)="onSelectKeyMoment(keyMoment, videoItem.accountId, videoItem.videoId)">
             <div class="key-moment_timestamp">{{ keyMoment?.startTime }}</div>
             <div class="key-moment_disc">{{ keyMoment?.text }}</div>
           </div>

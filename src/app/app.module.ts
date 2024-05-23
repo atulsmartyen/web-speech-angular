@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, DomSanitizer } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,6 +8,9 @@ import { WebSpeechModule } from './web-speech/web-speech.module';
 import { UploadDocModule } from './upload-doc/upload-doc.module';
 import { SearchDocModule } from './search-doc/search-doc.module';
 import { VideoPlayerModule } from './video-player/video-player.module';
+// import { MatIconModule, MatIconRegistry } from '@angular/material';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
 
 @NgModule({
   declarations: [
@@ -26,4 +29,9 @@ import { VideoPlayerModule } from './video-player/video-player.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  // guideNotebook = `../../assets/icons/User-Guide-Logo.svg`;
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIconLiteral('guideNotebook', sanitizer.bypassSecurityTrustHtml(guideNotebook));
+  }
+}
