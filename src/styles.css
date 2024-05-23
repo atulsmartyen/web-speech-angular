@@ -6,3 +6,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 .mat-list-item { height: 100% !important;}
 .mat-list-item-content {align-items: flex-start !important;flex: 1;height: 100%  !important;}
 .mat-sidenav-content{background-color: #EAF6FD;}
+.mat-tab-label-active{color:#3f51b5}
