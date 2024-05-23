@@ -2,20 +2,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchService } from '../search-doc/services/search.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import {
-  CustomInsightsWidget,
-  IBaseStyleConfig,
-  ICustomColorElement,
-  ICustomData,
-  ICustomElement,
-  ICustomInsightsWidgetConfig,
-  IEmotion,
-  ITopic,
-  IInsightsWidgetConfig,
-  IWidgetStyle,
-  InsightsWidget,
-  IWidgetOptions
-} from '@azure/video-indexer-widgets';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -28,7 +14,7 @@ import { map } from 'rxjs/operators';
 export class VideoPlayerComponent implements OnInit {
   accountId: string = '';
   videoId: string = '';
-  videoUrl: SafeUrl = '';
+  videoUrl: Observable<SafeUrl> = new Observable<SafeUrl>();
   insightsUrl: SafeUrl = '';
   accessToken: string = '';
   startTime: string = '00.00.00.00';
@@ -45,20 +31,19 @@ export class VideoPlayerComponent implements OnInit {
       this.accountId = params.get('accountId') ?? '' ;
       this.videoId = params.get('videoId') ?? '';
       this.startTime = decodeURIComponent(params.get('startTime') ?? '');
-      //this.videoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getVideoUrl(this.startTime));
+      this.videoUrl = this.getVideoUrl();
       //this.insightsUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getInsightsUrl());
     });
   }
 
-  getVideoUrl(startTime: string): Observable<SafeResourceUrl> {
+  getVideoUrl(): Observable<SafeResourceUrl> {
     return this.searchService
       .getVideoToken()
       .pipe(
         map((token: any) => {
           this.accessToken = token;
-          const videoUrl = `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial?t=${this.getNoOfSecs(startTime)}`;
+          const videoUrl = `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial?t=${this.getNoOfSecs(this.startTime)}`;
           const videoUrlSafe = this.domSanitizer.bypassSecurityTrustResourceUrl(videoUrl);
-          this.videoUrl = videoUrlSafe;
           return videoUrlSafe;
         }));
   }
