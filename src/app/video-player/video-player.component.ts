@@ -30,6 +30,7 @@ export class VideoPlayerComponent implements OnInit {
   videoUrl: SafeUrl = '';
   insightsUrl: SafeUrl = '';
   accessToken: string = '';
+  startTime: string = '00.00.00.00';
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +43,9 @@ export class VideoPlayerComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.accountId = params.get('accountId') ?? '' ;
       this.videoId = params.get('videoId') ?? '';
-      this.videoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getVideoUrl());
+      this.startTime = decodeURIComponent(params.get('startTime') ?? '');
+      this.videoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getVideoUrl(this.startTime));
+      console.log('videoUrl:', this.videoUrl);
       this.insightsUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.getInsightsUrl());
     });
   }
@@ -77,9 +80,21 @@ export class VideoPlayerComponent implements OnInit {
     this.insightsWidget.render();
   }
 
-  getVideoUrl(): string {
+  getVideoUrl(startTime: string): string {
     this.accessToken = this.searchService.videoToken;
-    return `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial`;
+    return `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial?t=${this.getNoOfSecs(startTime)}`;
+  }
+
+  getNoOfSecs(startTime: string): number {
+    const parts = startTime.split(':');
+    const hours = +parts[0];
+    const minutes = +parts[1];
+    const secondsParts = parts[2].split('.');
+    const seconds = +secondsParts[0];
+    //const milliseconds = secondsParts[1] ? +secondsParts[1] / 1000 : 0;
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    console.log('totalSeconds:', totalSeconds);
+    return totalSeconds;
   }
 
   getInsightsUrl(): string {

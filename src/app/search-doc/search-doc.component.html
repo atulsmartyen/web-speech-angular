@@ -36,7 +36,7 @@
     </mat-tab>
     <mat-tab label="Videos">
       <mat-card class="video-card" *ngFor="let item of (searchedVideoItems | async)">
-        <video-item *ngIf="!!item.accountId" [videoItem]="item"></video-item>
+        <video-item *ngIf="!!item.accountId" [videoItem]="item"> </video-item>
       </mat-card>
     </mat-tab>
   </mat-tab-group>

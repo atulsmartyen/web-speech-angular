@@ -22,7 +22,7 @@ const routes: Routes = [{
     component: UploadDocComponent,
     pathMatch: 'full'
   },{
-    path: 'video-player/:accountId/:videoId',
+    path: 'video-player/:accountId/:videoId/:startTime',
     component: VideoPlayerComponent,
     pathMatch: 'full'
   },{

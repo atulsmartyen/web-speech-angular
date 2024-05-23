@@ -1,7 +1,10 @@
 
 
   <mat-card-header *ngIf="!!videoItem">
-    <img mat-card-md-image (click)="navigateToVideoPlayer(videoItem.accountId, videoItem.videoId)" [src]="getThumbnailLink(videoItem)" >
+    <img
+      mat-card-md-image
+      (click)="navigateToVideoPlayer(videoItem.accountId, videoItem.videoId, '0')"
+      [src]="thumbnailLink" >
     <mat-card-content>
       <mat-card-title>{{ videoItem.title }}</mat-card-title>
       <mat-card-subtitle>{{ videoItem.subtitle }}</mat-card-subtitle>
@@ -14,7 +17,7 @@
       </mat-expansion-panel-header>
       <mat-list>
         <mat-list-item *ngFor="let keyMoment of videoItem?.description">
-          <div class="key-moment">
+          <div class="key-moment" (click)="onSelectKeyMoment(keyMoment, videoItem.accountId, videoItem.videoId)">
             <div class="key-moment_timestamp">{{ keyMoment?.startTime }}</div>
             <div class="key-moment_disc">{{ keyMoment?.text }}</div>
           </div>

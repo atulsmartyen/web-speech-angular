@@ -41,8 +41,8 @@ export class SearchService {
   public videoToken: string = '';
 
   constructor(private http: HttpClient) {
-    this.getVideoToken().subscribe((data: any) => {
-      this.videoToken = data;
+    this.getVideoToken().subscribe((token: any) => {
+      this.videoToken = token;
     });
   }
 
