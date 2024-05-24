@@ -50,15 +50,19 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   getNoOfSecs(startTime: string): number {
-    const parts = startTime.split(':');
-    const hours = +parts[0];
-    const minutes = +parts[1];
-    const secondsParts = parts[2].split('.');
-    const seconds = +secondsParts[0];
-    //const milliseconds = secondsParts[1] ? +secondsParts[1] / 1000 : 0;
-    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-    console.log('totalSeconds:', totalSeconds);
-    return totalSeconds;
+    try {
+      const parts = startTime.split(':');
+      const hours = +parts[0];
+      const minutes = +parts[1];
+      const secondsParts = parts[2].split('.');
+      const seconds = +secondsParts[0];
+      //const milliseconds = secondsParts[1] ? +secondsParts[1] / 1000 : 0;
+      const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+      console.log('totalSeconds:', totalSeconds);
+      return totalSeconds;
+    } catch(e) {
+      return 0;
+    }
   }
 
   getInsightsUrl(): string {
