@@ -43,7 +43,7 @@ export class VideoPlayerComponent implements OnInit {
       .pipe(
         map((token: any) => {
           this.accessToken = token;
-          const videoUrl = `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial?t=${this.getNoOfSecs(this.startTime)}`;
+          const videoUrl = `https://www.videoindexer.ai/embed/player/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial&t=${this.getNoOfSecs(this.startTime)}`;
           const videoUrlSafe = this.domSanitizer.bypassSecurityTrustResourceUrl(videoUrl);
           return videoUrlSafe;
         }));
