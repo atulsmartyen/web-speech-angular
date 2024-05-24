@@ -1,7 +1,7 @@
   <section>
     <mat-card *ngIf="errorMessage$| async as errorMessage" class="notification">{{errorMessage}}</mat-card>
   </section>
-  <section>
+  <!-- <section>
     <mat-form-field>
       <mat-label>Select your language</mat-label>
       <mat-select [(value)]="currentLanguage">
@@ -10,7 +10,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </section>
+  </section> -->
   <section class="mic-panel">
     <section class="mic-control">
       <mat-card *ngIf="transcript$ | async" class="notification mat-elevation-z4">{{transcript$ | async}}</mat-card>
