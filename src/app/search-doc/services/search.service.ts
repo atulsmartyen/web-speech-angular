@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 export interface SearchItem {
     fileName ?: string,
@@ -35,15 +36,15 @@ export interface SearchMatch {
 export class SearchService {
   private apiUrl = 'https://func-curatorai.azurewebsites.net/query-prompt-docs?prompt=';
   private videoAPIurl = 'https://func-curatorai.azurewebsites.net/query-prompt-videos?prompt=';
-  private tokenUrl = 'https://func-curatorai.azurewebsites.net/get-token';
   readonly staticVideoThumbnail = '../../assets/images/static-video-thumbneil.png';
 
   public videoToken: string = '';
 
-  constructor(private http: HttpClient) {
-    this.getVideoToken().subscribe((token: any) => {
-      this.videoToken = token;
-    });
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.authService.getToken()
+      .subscribe((token: any) => {
+        this.videoToken = token;
+      });
   }
 
   search(prompt: string) {
@@ -52,10 +53,6 @@ export class SearchService {
 
   searchVideos(prompt: string) {
     return this.http.get(this.videoAPIurl + prompt, {});
-  }
-
-  getVideoToken() {
-    return !!this.videoToken ? of(this.videoToken) : this.http.get(this.tokenUrl, {});
   }
 
   getThumbnailLink(accountId: string, videoId: string, thumbnailId: string): string {
