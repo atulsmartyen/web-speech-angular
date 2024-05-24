@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
   private token: string = '';
-  private tokenUrl = 'https://func-curatorai.azurewebsites.net/get-token';
+  public tokenUrl = 'https://func-curatorai.azurewebsites.net/get-token';
 
   constructor(private http: HttpClient) { }
 

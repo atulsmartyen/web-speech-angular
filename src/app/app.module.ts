@@ -13,6 +13,8 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
 
 import { CoreModule } from './core/core.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/services/auth.interceptors';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,13 @@ import { CoreModule } from './core/core.module';
     VideoPlayerModule,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

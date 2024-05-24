@@ -1,10 +1,7 @@
 
 
   <mat-card-header *ngIf="!!videoItem">
-    <img
-      mat-card-md-image
-      (click)="navigateToVideoPlayer(videoItem.accountId, videoItem.videoId, '0')"
-      [src]="thumbnailLink" >
+    <img mat-card-md-image (click)="navigateToVideoPlayer(videoItem.accountId, videoItem.videoId, '0')" [src]="thumbnailLink$ | async">
     <mat-card-content>
       <mat-card-title>{{ videoItem.title }}</mat-card-title>
       <mat-card-subtitle>{{ videoItem.subtitle }}</mat-card-subtitle>

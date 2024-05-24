@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 export interface SearchItem {
@@ -53,6 +53,34 @@ export class SearchService {
 
   searchVideos(prompt: string) {
     return this.http.get(this.videoAPIurl + prompt, {});
+  }
+
+  getVideoThumbnailAsURL(accountId: string, videoId: string, thumbnailId: string): Observable<string> {
+    return this.http
+      .get(this.getThumbnailLink(accountId, videoId, thumbnailId), { responseType: 'blob' })
+      .pipe(
+        mergeMap((imgData) => {
+          return <string>this.readBlobAsURL(imgData as Blob);
+        })
+      )
+  }
+
+  public readBlobAsURL = (blob: Blob): any => {
+    if (!(blob instanceof Blob)) {
+      return throwError(() => new Error('`blob` must be an instance of File or Blob.'));
+    }
+    if (blob.size == 0 && blob.type == "") {
+      return of('');
+    }
+    return new Observable(obs => {
+      const reader = new FileReader();
+      reader.onerror = err => obs.error(err);
+      reader.onabort = err => obs.error(err);
+      reader.onload = () => obs.next(reader.result);
+      reader.onloadend = () => obs.complete();
+
+      return reader.readAsDataURL(blob);
+    });
   }
 
   getThumbnailLink(accountId: string, videoId: string, thumbnailId: string): string {
