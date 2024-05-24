@@ -12,6 +12,8 @@ import { VideoPlayerModule } from './video-player/video-player.module';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
 
+import { CoreModule } from './core/core.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +26,8 @@ import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
     WebSpeechModule,
     UploadDocModule,
     SearchDocModule,
-    VideoPlayerModule
+    VideoPlayerModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

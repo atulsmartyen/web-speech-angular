@@ -4,6 +4,7 @@ import { SearchService } from '../search-doc/services/search.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'video-player',
@@ -21,7 +22,7 @@ export class VideoPlayerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private searchService: SearchService,
+    private authService: AuthService,
     public domSanitizer: DomSanitizer
   ) {
   }
@@ -37,8 +38,8 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   getVideoUrl(): Observable<SafeResourceUrl> {
-    return this.searchService
-      .getVideoToken()
+    return this.authService
+      .getToken()
       .pipe(
         map((token: any) => {
           this.accessToken = token;
