@@ -13,9 +13,12 @@
         <mat-panel-title>{{ videoItem?.description?.length }} Key moments in this video</mat-panel-title>
       </mat-expansion-panel-header>
       <mat-list>
-        <mat-list-item *ngFor="let keyMoment of videoItem?.description">
-          <div class="key-moment"
-            (click)="onSelectKeyMoment(keyMoment, videoItem.accountId, videoItem.videoId)">
+        <mat-list-item
+          *ngFor="let keyMoment of videoItem?.description"
+          class="keyMoment-wrapper"
+          (click)="onSelectKeyMoment(keyMoment, videoItem.accountId, videoItem.videoId)"
+          >
+          <div class="key-moment">
             <div class="key-moment_timestamp">{{ keyMoment?.startTime }}</div>
             <div class="key-moment_disc">{{ keyMoment?.text }}</div>
           </div>

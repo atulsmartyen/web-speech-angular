@@ -30,6 +30,11 @@ mat-card {
   height: 60px;
 }
 
+.keyMoment-wrapper:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
 .key-moment_timestamp {
   font-size: 0.7rem;
   font-weight: bold;

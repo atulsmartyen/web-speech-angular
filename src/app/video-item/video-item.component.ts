@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SearchService } from '../search-doc/services/search.service';
 import { Observable, of } from 'rxjs';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'video-item',
@@ -14,12 +13,10 @@ import { map } from 'rxjs/operators';
 export class VideoItemComponent implements OnInit {
   @Input() videoItem: any;
   thumbnailLink$: Observable<SafeUrl> = of('');
-  thumbnailLink: SafeUrl = '';
+
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private searchService: SearchService,
-    private domSanitizer: DomSanitizer
+    private searchService: SearchService
   ) {}
 
   ngOnInit(): void {
