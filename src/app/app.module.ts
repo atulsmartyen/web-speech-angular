@@ -11,7 +11,9 @@ import { VideoPlayerModule } from './video-player/video-player.module';
 // import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
-// import voiceCommand from '!!raw-loader!../assets/images/Voice-Command-Icon.svg';
+import voiceCommand from '!!raw-loader!../assets/images/Voice-Command.svg';
+import uploadCommand from '!!raw-loader!../assets/images/Upload-Document.svg';
+import searchCommand from '!!raw-loader!../assets/images/Search-Command.svg';
 
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -44,9 +46,10 @@ import { NgxUploaderDirectiveModule } from 'ngx-uploader-directive';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  // guideNotebook = `../../assets/icons/User-Guide-Logo.svg`;
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIconLiteral('guideNotebook', sanitizer.bypassSecurityTrustHtml(guideNotebook));
-    // iconRegistry.addSvgIconLiteral('voiceCommand', sanitizer.bypassSecurityTrustHtml(voiceCommand));
+    iconRegistry.addSvgIconLiteral('voiceCommand', sanitizer.bypassSecurityTrustHtml(voiceCommand));
+    iconRegistry.addSvgIconLiteral('uploadCommand', sanitizer.bypassSecurityTrustHtml(uploadCommand));
+    iconRegistry.addSvgIconLiteral('searchCommand', sanitizer.bypassSecurityTrustHtml(searchCommand));
   }
 }

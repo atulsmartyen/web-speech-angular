@@ -13,6 +13,7 @@
   <!-- <input #fileUpload type="file" (change)="uploadFile($event)"> -->
   <file-selector
     #fileSelector
+    [fileUploadInProgress]="fileUploadInProgress"
     [icon]="UPLOAD_ICON"
     [supportedFileFormatsTooltipText]=""
     [addFilesDescription]="addFilesDescription"

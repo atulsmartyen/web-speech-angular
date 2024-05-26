@@ -3,10 +3,13 @@
     <mat-form-field class="input-control">
       <mat-label>Enter Prompt to search inside document</mat-label>
       <input matInput [(ngModel)]="searchText" placeholder="Enter document name" />
-      <mat-icon class="input-mic" (click)="navigateToWebSpeech()">mic</mat-icon>  
+      <!-- <mat-icon class="input-mic" (click)="navigateToWebSpeech()">mic</mat-icon> -->
+      <button mat-icon-button class="input-mic" (click)="navigateToWebSpeech()">
+        <mat-icon svgIcon="voiceCommand"></mat-icon>
+      </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
-    <button mat-raised-button color="primary" (click)="onUpload()" class="upload-button">Upload</button>
+    <button mat-raised-button (click)="onSearch()"><mat-icon svgIcon="searchCommand"></mat-icon> Search</button>
+    <button mat-raised-button (click)="onUpload()" class="upload-button"> <mat-icon svgIcon="uploadCommand"></mat-icon> Upload</button>
   </div>
   <mat-tab-group>
     <mat-tab label="Documents">

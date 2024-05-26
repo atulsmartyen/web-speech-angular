@@ -25,7 +25,7 @@
       </div>
     </div>
   
-    <label (click)="onCustomButton()">
+    <label [for]="filesInputId">
       {{buttonText}}
     </label>
   
@@ -43,5 +43,7 @@
     <ng-template #tooltipContent>
       <div [innerHtml]="supportedFileFormatsTooltipText"></div>
     </ng-template> -->
-  </div>
-  
+</div>
+<div class="loading-indicator" *ngIf="fileUploadInProgress">
+  <mat-spinner [diameter]="70"></mat-spinner>
+</div>

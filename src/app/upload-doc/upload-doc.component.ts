@@ -5,17 +5,17 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 @Component({
   selector: 'upload-doc',
   templateUrl: './upload-doc.component.html',
-  styleUrls: ['./upload-doc.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./upload-doc.component.css']
 })
 export class UploadDocComponent implements OnInit {
 
-  public readonly UPLOAD_ICON: string = '/assets/images/Upload-Document-Icon.svg';
+  public readonly UPLOAD_ICON: string = '/assets/images/Upload-Document.svg';
   documentTypes: string[] = ['pdf', 'doc', 'docx', 'txt', 'mp4', 'mp3'];
   currentDocument: string = 'pdf';
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   addFilesDescription: string = 'Add files here, Drag & drop or browse';
+  fileUploadInProgress: boolean = false;
 
   constructor(
     private uploadService: UploadService,
@@ -34,12 +34,13 @@ export class UploadDocComponent implements OnInit {
       this.handleFileUploadError();
       return;
     }
-
+    this.fileUploadInProgress = true;
     this.uploadService.uploadFile(file)
       .subscribe(response => {
         this.handleFileUploadSuccess(file.name);
-        console.log(response);
+        this.fileUploadInProgress = false;
       }, error => {
+        this.fileUploadInProgress = false;
         this.handleFileUploadError("Error in file upload");
       });
   }

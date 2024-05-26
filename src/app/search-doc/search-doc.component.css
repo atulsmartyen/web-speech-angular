@@ -110,7 +110,7 @@
     position: absolute;
     right: 0px;
     cursor: pointer;
-    top: 0px;
+    top: -8px;
   }
 
   .upload-button {
