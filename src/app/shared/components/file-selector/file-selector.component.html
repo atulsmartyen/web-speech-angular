@@ -1,0 +1,47 @@
+<div class="dd-container" appDndFiles (fileDropped)="filesHandler($event, true)">
+    <input
+      type="file"
+      hidden
+      #fileDropRef
+      [id]="filesInputId"
+      multiple
+      [accept]="supportedFileFormats"
+      (change)="filesHandler(fileDropRef?.files, false)"/>
+    <img [src]="icon" class="part-list-add-part-icon"/>
+    <div class="add-files-description">
+      <div class="add-files-description__content">
+        <div class="add-files-description__message">{{addFilesDescription}}</div>
+        <!-- <div *ngIf="showUnitsSection" class="add-files-description__units-label">{{unitsLabel}}</div>
+        <apl-chevron-listbox
+          class="add-files-description__units-button"
+          *ngIf="showUnitsSection"
+          [headerMessage]="unitsHeader"
+          [footerMessage]="unitsFooter"
+          [selectedValue]="selectedUnit"
+          [chevronListItems]="units"
+          (onValueChange)="onUnitSelectionChange($event)"
+          >
+        </apl-chevron-listbox> -->
+      </div>
+    </div>
+  
+    <label (click)="onCustomButton()">
+      {{buttonText}}
+    </label>
+  
+    <!-- <ng-template #defaultButton>
+      <label
+        [for]="filesInputId"
+        [popover]="supportedFileFormatsTooltipText ? tooltipContent : null"
+        placement="bottom"
+        triggers="mouseenter:mouseleave"
+        containerClass="apollo-default apollo-popover">
+        {{buttonText}}
+      </label>
+    </ng-template>
+  
+    <ng-template #tooltipContent>
+      <div [innerHtml]="supportedFileFormatsTooltipText"></div>
+    </ng-template> -->
+  </div>
+  

@@ -18,10 +18,10 @@
 
   <div>
     <mat-toolbar class="shadow">
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <!-- <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
-      </button>
-      <img src="../assets/images/Logo.svg" alt="Logo Precision Search">
+      </button> -->
+      <img src="../assets/images/Logo.svg" alt="Logo Precision Search" style="cursor: pointer;" (click)="navigateHome()">
       <span class="fill-space"></span>
       <button mat-icon-button (click)="openHelp()">
         <mat-icon svgIcon="guideNotebook"></mat-icon>

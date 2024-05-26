@@ -9,10 +9,13 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadDocComponent implements OnInit {
+
+  public readonly UPLOAD_ICON: string = '/assets/images/Upload-Document-Icon.svg';
   documentTypes: string[] = ['pdf', 'doc', 'docx', 'txt', 'mp4', 'mp3'];
   currentDocument: string = 'pdf';
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+  addFilesDescription: string = 'Add files here, Drag & drop or browse';
 
   constructor(
     private uploadService: UploadService,
@@ -26,7 +29,7 @@ export class UploadDocComponent implements OnInit {
   }
 
   uploadFile(event: any): void {
-    const file: File = event.target.files[0];
+    const file: File = event.files[0];
     if (!file || file.type !== 'application/pdf') {
       this.handleFileUploadError();
       return;

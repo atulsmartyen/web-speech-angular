@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchItem, SearchVideoItem, SearchService } from './services/search.service';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'search-doc',
@@ -24,10 +24,14 @@ export class SearchDocComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(take(1)).subscribe(params => {
       this.searchText = params.get('input') ?? '' ;
       this.onSearch();
     });
+  }
+
+  navigateToWebSpeech() {
+    this.router.navigate(['/web-speech']);
   }
 
   onSearch() {
@@ -90,6 +94,10 @@ export class SearchDocComponent implements OnInit {
           }
         })
       );
+  }
+
+  onUpload() {
+    this.router.navigate(['/upload-document']);
   }
 
   searchItemsBasedOnPrompt(prompt: string) {

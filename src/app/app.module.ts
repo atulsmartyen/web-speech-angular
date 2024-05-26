@@ -11,10 +11,12 @@ import { VideoPlayerModule } from './video-player/video-player.module';
 // import { MatIconModule, MatIconRegistry } from '@angular/material';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import guideNotebook from '!!raw-loader!../assets/images/User-Guide-Logo.svg';
+// import voiceCommand from '!!raw-loader!../assets/images/Voice-Command-Icon.svg';
 
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/services/auth.interceptors';
+import { NgxUploaderDirectiveModule } from 'ngx-uploader-directive';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { AuthInterceptor } from './core/services/auth.interceptors';
     UploadDocModule,
     SearchDocModule,
     VideoPlayerModule,
-    CoreModule
+    CoreModule,
+    NgxUploaderDirectiveModule
   ],
   providers: [
     {
@@ -44,5 +47,6 @@ export class AppModule {
   // guideNotebook = `../../assets/icons/User-Guide-Logo.svg`;
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIconLiteral('guideNotebook', sanitizer.bypassSecurityTrustHtml(guideNotebook));
+    // iconRegistry.addSvgIconLiteral('voiceCommand', sanitizer.bypassSecurityTrustHtml(voiceCommand));
   }
 }

@@ -24,6 +24,7 @@
     "@angular/router": "^14.2.0",
     "@azure/ms-rest-browserauth": "^1.0.2",
     "@azure/video-indexer-widgets": "^1.0.5",
+    "ngx-uploader-directive": "^1.3.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

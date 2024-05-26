@@ -10,5 +10,12 @@
       </mat-option>
     </mat-select>
   </mat-form-field> -->
-  <input #fileUpload type="file" (change)="uploadFile($event)">
+  <!-- <input #fileUpload type="file" (change)="uploadFile($event)"> -->
+  <file-selector
+    #fileSelector
+    [icon]="UPLOAD_ICON"
+    [supportedFileFormatsTooltipText]=""
+    [addFilesDescription]="addFilesDescription"
+    (onFiles)="uploadFile($event)">
+  </file-selector>
 </section>

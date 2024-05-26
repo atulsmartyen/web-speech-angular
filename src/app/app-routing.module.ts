@@ -7,6 +7,10 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 
 const routes: Routes = [{
     path: '',
+    component: SearchDocComponent,
+    pathMatch: 'full'
+  },{
+    path: 'web-speech',
     component: WebSpeechComponent,
     pathMatch: 'full'
   },{

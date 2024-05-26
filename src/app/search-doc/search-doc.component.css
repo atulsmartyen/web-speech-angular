@@ -105,3 +105,19 @@
       padding-right: 1rem;
     }
   }
+
+  .input-mic {
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    top: 0px;
+  }
+
+  .upload-button {
+    margin-left: 20px;
+  }
+
+  .input-control {
+    margin-top: 1rem;
+    margin-right: 0px;
+  }

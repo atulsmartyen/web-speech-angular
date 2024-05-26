@@ -1,10 +1,12 @@
 <section>
   <div class="serach-controls">
-    <mat-form-field>
+    <mat-form-field class="input-control">
       <mat-label>Enter Prompt to search inside document</mat-label>
-      <input matInput [(ngModel)]="searchText" placeholder="Enter document name" />    
+      <input matInput [(ngModel)]="searchText" placeholder="Enter document name" />
+      <mat-icon class="input-mic" (click)="navigateToWebSpeech()">mic</mat-icon>  
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
+    <button mat-raised-button color="primary" (click)="onUpload()" class="upload-button">Upload</button>
   </div>
   <mat-tab-group>
     <mat-tab label="Documents">
