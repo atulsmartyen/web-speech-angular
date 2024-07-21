@@ -113,6 +113,11 @@
     top: -8px;
   }
 
+  .doc-content-wrapper {
+    margin-top: 10px;
+    margin-left: -10px;
+  }
+
   .upload-button {
     margin-left: 20px;
   }

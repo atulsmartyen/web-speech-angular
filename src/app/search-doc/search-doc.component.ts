@@ -38,28 +38,36 @@ export class SearchDocComponent implements OnInit {
     this.searchedItems = this.searchItemsBasedOnPrompt(this.searchText)
     .pipe(
       map((data: any) => {
-        const groupedItems = (Object.values(data) as Array<SearchItem[]>)
-          .flat()
-          .reduce((acc: { [key: string]: SearchItem[] }, item: SearchItem) => {
-            if (!item) return acc;
+        // const groupedItems = (Object.values(data) as Array<SearchItem[]>)
+        //   .flat()
+        //   .reduce((acc: { [key: string]: SearchItem[] }, item: SearchItem) => {
+        //     if (!item) return acc;
 
-            const key = item?.fileName;
-            if (!key) return acc;
+        //     const key = item?.fileName;
+        //     if (!key) return acc;
   
-            if (!acc[key]) {
-              acc[key] = [];
-            }
+        //     if (!acc[key]) {
+        //       acc[key] = [];
+        //     }
   
-            if(!item.metadata) {  return acc; }
+        //     if(!item.metadata) {  return acc; }
 
-            acc[key].push({
-              title: item.fileName,
-              subtitle: `Page: ${item.metadata.page}`,
-              description: `${item.data}`
-            });
+        //     acc[key].push({
+        //       title: item.fileName,
+        //       subtitle: `Page: ${item.metadata.page}`,
+        //       description: `${item.data}`
+        //     });
 
-            return acc;
-          }, {});
+        //     return acc;
+        //   }, {});
+
+        const groupedItems = data.fileName ? [{...data}].map((item:any) => {
+          return {
+            title: item.fileName,
+            subtitle: `${10/parseInt(item.metadata)}`,
+            description: `${item.data}`
+          }
+        }) : [];
   
         console.log('groupedItems:', groupedItems);
         if(!groupedItems) { return [] }
@@ -69,7 +77,6 @@ export class SearchDocComponent implements OnInit {
     );
 
     this.searchedItems.subscribe(items=> console.log('search items : ', items));
-
     this.searchedVideoItems = this.searchVideoItemsBasedOnPrompt(this.searchText)
       .pipe(
         map((data: any) => {
@@ -98,6 +105,10 @@ export class SearchDocComponent implements OnInit {
 
   onUpload() {
     this.router.navigate(['/upload-document']);
+  }
+
+  transformNewlines(text: string): string {
+    return text.replace(/\n/g, '<br>');
   }
 
   searchItemsBasedOnPrompt(prompt: string) {
