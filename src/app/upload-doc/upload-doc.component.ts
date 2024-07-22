@@ -30,7 +30,7 @@ export class UploadDocComponent implements OnInit {
 
   uploadFile(event: any): void {
     const file: File = event.files[0];
-    if (!file || file.type !== 'application/pdf') {
+    if (!file) {
       this.handleFileUploadError();
       return;
     }
