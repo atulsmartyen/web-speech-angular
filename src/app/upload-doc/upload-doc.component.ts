@@ -16,6 +16,7 @@ export class UploadDocComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   addFilesDescription: string = 'Add files here, Drag & drop or browse';
   fileUploadInProgress: boolean = false;
+  allowedDocTypes: string[] = ['video/mp4', 'application/pdf'];
 
   constructor(
     private uploadService: UploadService,
@@ -30,7 +31,7 @@ export class UploadDocComponent implements OnInit {
 
   uploadFile(event: any): void {
     const file: File = event.files[0];
-    if (!file) {
+    if (!file || !this.allowedDocTypes.includes(file.type)) {
       this.handleFileUploadError();
       return;
     }
