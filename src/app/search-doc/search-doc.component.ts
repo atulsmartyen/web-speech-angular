@@ -13,8 +13,8 @@ import { first, map, take } from 'rxjs/operators';
 export class SearchDocComponent implements OnInit {
   panelOpenState = true;
   searchText: string = '';
-  searchedItems: Observable<any[] | undefined> = of([]);
-  searchedVideoItems: Observable<any[] | undefined> = of([]);
+  searchedItems: Observable<any[] | undefined>;
+  searchedVideoItems: Observable<any[] | undefined>;
 
   constructor(
     private route: ActivatedRoute,
@@ -76,7 +76,6 @@ export class SearchDocComponent implements OnInit {
       })
     );
 
-    this.searchedItems.subscribe(items=> console.log('search items : ', items));
     this.searchedVideoItems = this.searchVideoItemsBasedOnPrompt(this.searchText)
       .pipe(
         map((data: any) => {
