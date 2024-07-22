@@ -18,7 +18,6 @@ import searchCommand from '!!raw-loader!../assets/images/Search-Command.svg';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './core/services/auth.interceptors';
-import { NgxUploaderDirectiveModule } from 'ngx-uploader-directive';
 
 @NgModule({
   declarations: [
@@ -33,8 +32,7 @@ import { NgxUploaderDirectiveModule } from 'ngx-uploader-directive';
     UploadDocModule,
     SearchDocModule,
     VideoPlayerModule,
-    CoreModule,
-    NgxUploaderDirectiveModule
+    CoreModule
   ],
   providers: [
     {
