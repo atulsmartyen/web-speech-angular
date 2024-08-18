@@ -34,17 +34,17 @@ export interface SearchMatch {
   providedIn: 'root'
 })
 export class SearchService {
-  private apiUrl = 'https://func-curatorai.azurewebsites.net/query-prompt-docs?prompt=';
-  private videoAPIurl = 'https://func-curatorai.azurewebsites.net/query-prompt-videos?prompt=';
+  private apiUrl = 'https://func-curatorai.azurewebsites.net/api/query-prompt-docs?prompt=';
+  private videoAPIurl = 'https://func-curatorai.azurewebsites.net/api/query-prompt-videos?prompt=';
   readonly staticVideoThumbnail = '../../assets/images/static-video-thumbneil.png';
 
   public videoToken: string = '';
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.authService.getToken()
-      .subscribe((token: any) => {
-        this.videoToken = token;
-      });
+    // this.authService.getToken()
+    //   .subscribe((token: any) => {
+    //     this.videoToken = token;
+    //   });
   }
 
   search(prompt: string) {

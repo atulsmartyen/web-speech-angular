@@ -14,13 +14,14 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getToken(): Observable<string> {
-    if (!this.token) {
-      return this.http.get<string>(this.tokenUrl)
-        .pipe(
-            tap((token) => {this.token = token})
-        );
-    } else {
-      return of(this.token);
-    }
+    // if (!this.token) {
+    //   return this.http.get<string>(this.tokenUrl)
+    //     .pipe(
+    //         tap((token) => {this.token = token})
+    //     );
+    // } else {
+    //   return of(this.token);
+    // }
+    return of(this.token);
   }
 }

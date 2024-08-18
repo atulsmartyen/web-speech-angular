@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchItem, SearchVideoItem, SearchService } from './services/search.service';
 import { Observable, of } from 'rxjs';
 import { first, map, take } from 'rxjs/operators';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'search-doc',
@@ -60,8 +61,9 @@ export class SearchDocComponent implements OnInit {
 
         //     return acc;
         //   }, {});
+        const parsedData = JSON.parse(data);
 
-        const groupedItems = data.fileName ? [{...data}].map((item:any) => {
+        const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
           return {
             title: item.fileName,
             subtitle: `${10/parseInt(item.metadata)}`,
@@ -69,7 +71,6 @@ export class SearchDocComponent implements OnInit {
           }
         }) : [];
   
-        console.log('groupedItems:', groupedItems);
         if(!groupedItems) { return [] }
         // Convert the object back to an array
         return Object.values(groupedItems);
