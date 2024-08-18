@@ -14,8 +14,10 @@ import { JsonPipe } from '@angular/common';
 export class SearchDocComponent implements OnInit {
   panelOpenState = true;
   searchText: string = '';
-  searchedItems: Observable<any[] | undefined>;
-  searchedVideoItems: Observable<any[] | undefined>;
+  searchedItems$: Observable<any[] | undefined>;
+  searchedItems;
+  searchedVideoItems$: Observable<any[] | undefined>;
+  searchedVideoItems;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,71 +38,82 @@ export class SearchDocComponent implements OnInit {
   }
 
   onSearch() {
-    this.searchedItems = this.searchItemsBasedOnPrompt(this.searchText)
-    .pipe(
-      map((data: any) => {
-        // const groupedItems = (Object.values(data) as Array<SearchItem[]>)
-        //   .flat()
-        //   .reduce((acc: { [key: string]: SearchItem[] }, item: SearchItem) => {
-        //     if (!item) return acc;
-
-        //     const key = item?.fileName;
-        //     if (!key) return acc;
-  
-        //     if (!acc[key]) {
-        //       acc[key] = [];
-        //     }
-  
-        //     if(!item.metadata) {  return acc; }
-
-        //     acc[key].push({
-        //       title: item.fileName,
-        //       subtitle: `Page: ${item.metadata.page}`,
-        //       description: `${item.data}`
-        //     });
-
-        //     return acc;
-        //   }, {});
-        const parsedData = JSON.parse(data);
-
-        const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
-          return {
-            title: item.fileName,
-            subtitle: `${10/parseInt(item.metadata)}`,
-            description: `${item.data}`
-          }
-        }) : [];
-  
-        if(!groupedItems) { return [] }
-        // Convert the object back to an array
-        return Object.values(groupedItems);
-      })
-    );
-
-    this.searchedVideoItems = this.searchVideoItemsBasedOnPrompt(this.searchText)
+    this.searchedItems$ = this.searchItemsBasedOnPrompt(this.searchText)
       .pipe(
+        take(1),
         map((data: any) => {
+          // const groupedItems = (Object.values(data) as Array<SearchItem[]>)
+          //   .flat()
+          //   .reduce((acc: { [key: string]: SearchItem[] }, item: SearchItem) => {
+          //     if (!item) return acc;
+
+          //     const key = item?.fileName;
+          //     if (!key) return acc;
+    
+          //     if (!acc[key]) {
+          //       acc[key] = [];
+          //     }
+    
+          //     if(!item.metadata) {  return acc; }
+
+          //     acc[key].push({
+          //       title: item.fileName,
+          //       subtitle: `Page: ${item.metadata.page}`,
+          //       description: `${item.data}`
+          //     });
+
+          //     return acc;
+          //   }, {});
           try {
             const parsedData = JSON.parse(data);
-            return parsedData.results.map((item: SearchVideoItem) => {
-                return {
-                  title: item.name,
-                  subtitle: `Acc ID: ${item.accountId}`,
-                  videoId: item.thumbnailVideoId,
-                  accountId: item.accountId,
-                  thumbnailId: item.thumbnailId,
-                  description: [...item.searchMatches.map(match => {
-                    const matchObj = { startTime : match.startTime, text: match.text };
-                    return matchObj;
-                  })]
-              };
-            })
+            const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
+              return {
+                title: item.fileName,
+                subtitle: `${10/parseInt(item.metadata)}`,
+                description: `${item.data}`
+              }
+            }) : [];
+      
+            if(!groupedItems) { return [] }
+            // Convert the object back to an array
+            this.searchedItems = Object.values(groupedItems); 
+            return this.searchedItems;
           } catch (error) {
             console.error('Error parsing data:', error);
-            return [];
+            this.searchedItems = [];
+            return this.searchedItems;
           }
         })
       );
+
+    this.searchedVideoItems$ = this.searchVideoItemsBasedOnPrompt(this.searchText)
+      .pipe(
+        take(1),
+        map((data: any) => {
+          try {
+            const parsedData = JSON.parse(data);
+            const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
+              return {
+                title: item.fileName,
+                subtitle: `${10/parseInt(item.metadata)}`,
+                description: `${item.data}`
+              }
+            }) : [];
+      
+            if(!groupedItems) { return [] }
+            // Convert the object back to an array
+            this.searchedVideoItems = Object.values(groupedItems);
+            return this.searchedVideoItems;
+          } catch (error) {
+            console.error('Error parsing data:', error);
+            this.searchedVideoItems = []; 
+            return this.searchedVideoItems;
+          }
+        })
+      );
+
+    this.searchedItems$.subscribe();
+    this.searchedVideoItems$.subscribe();
   }
 
   onUpload() {
