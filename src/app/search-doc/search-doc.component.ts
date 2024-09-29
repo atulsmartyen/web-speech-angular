@@ -133,4 +133,11 @@ export class SearchDocComponent implements OnInit {
     if (!prompt) { return of('{"results":[]}'); }
     return this.searchService.searchVideos(prompt);
   }
+
+  navigateToVideoPlayer(startTime: string) {
+    const accountId: string = '1e1039c3-2aa4-4d7d-b9d2-a41a7967441e';
+    const videoId: string = 'e2a1mlnen7';
+
+    this.router.navigate(['/video-player', accountId, videoId, encodeURIComponent(startTime)]);
+  }
 }

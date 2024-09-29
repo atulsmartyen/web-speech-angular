@@ -58,7 +58,6 @@ export class VideoPlayerComponent implements OnInit {
       const seconds = +secondsParts[0];
       //const milliseconds = secondsParts[1] ? +secondsParts[1] / 1000 : 0;
       const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-      console.log('totalSeconds:', totalSeconds);
       return totalSeconds;
     } catch(e) {
       return 0;
@@ -66,6 +65,8 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   getInsightsUrl(): string {
+    this.accountId = '1e1039c3-2aa4-4d7d-b9d2-a41a7967441e';
+    this.videoId = 'e2a1mlnen7';
     return `https://www.videoindexer.ai/embed/insights/${this.accountId}/${this.videoId}/?accessToken=${this.accessToken}&locale=en&location=trial`;
   }
 }

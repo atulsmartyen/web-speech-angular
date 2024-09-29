@@ -9,19 +9,18 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
   private token: string = '';
-  public tokenUrl = 'https://func-curatorai.azurewebsites.net/get-token';
+  public tokenUrl = 'https://func-curator.azurewebsites.net/api/get-token';
 
   constructor(private http: HttpClient) { }
 
   getToken(): Observable<string> {
-    // if (!this.token) {
-    //   return this.http.get<string>(this.tokenUrl)
-    //     .pipe(
-    //         tap((token) => {this.token = token})
-    //     );
-    // } else {
-    //   return of(this.token);
-    // }
-    return of(this.token);
+    if (!this.token) {
+      return this.http.get<string>(this.tokenUrl)
+        .pipe(
+            tap((token) => {this.token = token})
+        );
+    } else {
+      return of(this.token);
+    }
   }
 }
