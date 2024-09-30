@@ -40,7 +40,7 @@ export class SearchService {
 
   public videoToken: string = '';
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
     // this.authService.getToken()
     //   .subscribe((token: any) => {
     //     this.videoToken = token;

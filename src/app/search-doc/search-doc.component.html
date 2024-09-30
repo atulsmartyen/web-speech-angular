@@ -45,9 +45,10 @@
         <video-item *ngIf="!!item.accountId" [videoItem]="item"> </video-item>
       </mat-card> -->
       <ng-template matTabContent>
-        <mat-card *ngFor="let item of (searchedVideoItems)">
+        <mat-card *ngFor="let item of searchedVideoItems">
           <mat-card-header *ngIf="!!item">
               <img mat-card-md-image class="doc-img" src="../../assets/images/video-thumbnail.jpg" (click)="navigateToVideoPlayer('0')">
+
             <mat-card-content>
               <mat-card-title class="doc-title">{{ item.title }}</mat-card-title>
             </mat-card-content>

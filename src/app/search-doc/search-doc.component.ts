@@ -27,10 +27,10 @@ export class SearchDocComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.route.paramMap.pipe(take(1)).subscribe(params => {
-      this.searchText = params.get('input') ?? '' ;
-      this.onSearch();
-    });
+    // this.route.paramMap.pipe(take(1)).subscribe(params => {
+    //   this.searchText = params.get('input') ?? '' ;
+    //   if (this.searchText) { this.onSearch(); }
+    // });
   }
 
   navigateToWebSpeech() {
@@ -40,31 +40,9 @@ export class SearchDocComponent implements OnInit {
   onSearch() {
     this.searchedItems$ = this.searchItemsBasedOnPrompt(this.searchText)
       .pipe(
-        take(1),
         map((data: any) => {
-          // const groupedItems = (Object.values(data) as Array<SearchItem[]>)
-          //   .flat()
-          //   .reduce((acc: { [key: string]: SearchItem[] }, item: SearchItem) => {
-          //     if (!item) return acc;
-
-          //     const key = item?.fileName;
-          //     if (!key) return acc;
-    
-          //     if (!acc[key]) {
-          //       acc[key] = [];
-          //     }
-    
-          //     if(!item.metadata) {  return acc; }
-
-          //     acc[key].push({
-          //       title: item.fileName,
-          //       subtitle: `Page: ${item.metadata.page}`,
-          //       description: `${item.data}`
-          //     });
-
-          //     return acc;
-          //   }, {});
           try {
+            console.log('data : ',data);
             const parsedData = JSON.parse(data);
             const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
               return {
@@ -88,9 +66,9 @@ export class SearchDocComponent implements OnInit {
 
     this.searchedVideoItems$ = this.searchVideoItemsBasedOnPrompt(this.searchText)
       .pipe(
-        take(1),
         map((data: any) => {
           try {
+            console.log('data : ',data);
             const parsedData = JSON.parse(data);
             const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
               return {
@@ -125,7 +103,7 @@ export class SearchDocComponent implements OnInit {
   }
 
   searchItemsBasedOnPrompt(prompt: string) {
-    if (!prompt) { return of([]); }
+    if (!prompt) { return of('{"results":[]}'); }
     return this.searchService.search(prompt);
   }
 
