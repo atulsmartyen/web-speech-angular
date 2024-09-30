@@ -13,7 +13,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class SearchDocComponent implements OnInit {
   panelOpenState = true;
-  searchText: string = '';
+  searchText: string = 'what are main components of V60 depositor machine ?';
   searchedItems$: Observable<any[] | undefined>;
   searchedItems;
   searchedVideoItems$: Observable<any[] | undefined>;
@@ -68,12 +68,12 @@ export class SearchDocComponent implements OnInit {
       .pipe(
         map((data: any) => {
           try {
-            console.log('data : ',data);
             const parsedData = JSON.parse(data);
             const groupedItems = parsedData.fileName ? [{...parsedData}].map((item:any) => {
               return {
                 title: item.fileName,
                 subtitle: `${10/parseInt(item.metadata)}`,
+                time: item.metadata,
                 description: `${item.data}`
               }
             }) : [];
