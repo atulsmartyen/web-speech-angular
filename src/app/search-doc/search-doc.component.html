@@ -3,20 +3,29 @@
     <mat-form-field class="input-control">
       <mat-label>Enter Prompt to search inside document</mat-label>
       <input matInput [(ngModel)]="searchText" placeholder="Enter document name" />
-      <!-- <mat-icon class="input-mic" (click)="navigateToWebSpeech()">mic</mat-icon> -->
       <button mat-icon-button class="input-mic" (click)="navigateToWebSpeech()">
         <mat-icon svgIcon="voiceCommand"></mat-icon>
       </button>
     </mat-form-field>
-    <button mat-raised-button (click)="onSearch()"><mat-icon svgIcon="searchCommand"></mat-icon> Search</button>
-    <button mat-raised-button (click)="onUpload()" class="upload-button"> <mat-icon svgIcon="uploadCommand"></mat-icon> Upload</button>
+    <button mat-raised-button (click)="onSearch()">
+      <mat-icon svgIcon="searchCommand"></mat-icon> Search
+    </button>
+    <button mat-raised-button (click)="onUpload()" class="upload-button">
+      <mat-icon svgIcon="uploadCommand"></mat-icon> Upload
+    </button>
   </div>
+
   <mat-tab-group>
+    <!-- Documents Tab -->
     <mat-tab label="Documents">
       <ng-template matTabContent>
-        <mat-card *ngFor="let item of (searchedItems)">
+        <div class="loading-overlay" *ngIf="isDocLoading">
+          <mat-spinner></mat-spinner>
+          <p>Loading Documents...</p>
+        </div>
+        <mat-card *ngFor="let item of (searchedItems)" class="card-content" [class.loading]="isDocLoading">
           <mat-card-header *ngIf="!!item">
-            <img mat-card-md-image class="doc-img" src="../../assets/images/doc_logo.jpg" >
+            <img mat-card-md-image class="doc-img" src="../../assets/images/doc_logo.jpg">
             <mat-card-content>
               <mat-card-title class="doc-title">{{ item.title }}</mat-card-title>
             </mat-card-content>
@@ -29,11 +38,17 @@
         </mat-card>
       </ng-template>
     </mat-tab>
+
+    <!-- Videos Tab -->
     <mat-tab label="Videos">
       <ng-template matTabContent>
-        <mat-card *ngFor="let item of searchedVideoItems">
+        <div class="loading-overlay" *ngIf="isVideoLoading">
+          <mat-spinner></mat-spinner>
+          <p>Loading Videos...</p>
+        </div>
+        <mat-card *ngFor="let item of searchedVideoItems" class="card-content" [class.loading]="isVideoLoading">
           <mat-card-header *ngIf="!!item">
-              <img mat-card-md-image class="doc-img" src="../../assets/images/video-thumbnail.jpg" (click)="navigateToVideoPlayer(item.time)">
+            <img mat-card-md-image class="doc-img" src="../../assets/images/video-thumbnail.jpg" (click)="navigateToVideoPlayer(item.time)">
             <mat-card-content>
               <mat-card-title class="doc-title">{{ item.title }}</mat-card-title>
             </mat-card-content>
