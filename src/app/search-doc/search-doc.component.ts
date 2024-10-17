@@ -2,27 +2,25 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchItem, SearchVideoItem, SearchService } from './services/search.service';
 import { Observable, of } from 'rxjs';
-import { concatMap, debounceTime, first, switchMap, take, tap } from 'rxjs/operators';
+import { catchError, concatMap, debounceTime, first, switchMap, take, tap } from 'rxjs/operators';
 import { JsonPipe } from '@angular/common';
 import { concat, timer } from 'rxjs';
-  import { map, finalize } from 'rxjs/operators';
+import { map, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'search-doc',
   templateUrl: './search-doc.component.html',
   styleUrls: ['./search-doc.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchDocComponent implements OnInit {
   panelOpenState = true;
   searchText: string = 'what are main components of V60 depositor machine ?';
-  searchedItems$: Observable<any[] | undefined>;
-  searchedItems;
-  searchedVideoItems$: Observable<any[] | undefined>;
+  searchedDocItems;
   searchedVideoItems;
 
-  isDocLoading: boolean = false;  // Indicates if document search is loading
-  isVideoLoading: boolean = false; // Indicates if video search is loading
+  currentSelectedTab: number = 0;
+
+  isResultLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +32,7 @@ export class SearchDocComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.pipe(take(1)).subscribe(params => {
       this.searchText = params.get('input') ?? this.searchText ;
-      if (this.searchText) { this.onSearch(); }
+      //if (this.searchText) { this.onSearch(); }
     });
   }
 
@@ -42,9 +40,11 @@ export class SearchDocComponent implements OnInit {
     this.router.navigate(['/web-speech']);
   }
 
+  onSelectedTabChange(tab) {
+    this.currentSelectedTab = tab.index;
+  }
+
   onSearch() {
-    // Set document loading state to true
-    this.isDocLoading = true;
   
     // Document search observable
     const documentSearch$ = this.searchItemsBasedOnPrompt(this.searchText)
@@ -62,26 +62,24 @@ export class SearchDocComponent implements OnInit {
             }) : [];
   
             if (!groupedItems) { return []; }
-            this.searchedItems = Object.values(groupedItems);
-            return this.searchedItems;
+            this.searchedDocItems = Object.values(groupedItems);
+            this.isResultLoading = false;
+            return this.searchedDocItems;
           } catch (error) {
-            console.error('Error parsing data:', error);
-            this.searchedItems = [];
-            return this.searchedItems;
+            this.searchedDocItems = [];
+            this.isResultLoading = false;
+            return this.searchedDocItems;
           }
         }),
-        finalize(() => {
-          this.isDocLoading = false;  // Set document loading state to false after completion
+        catchError(() => {
+          this.isResultLoading = false;
+          this.searchedDocItems = [];
+
+          return this.searchedDocItems;
         })
       );
   
-    // Video search observable (with 1-minute delay)
-    const videoSearch$ = timer(61000).pipe(
-      take(1), // Ensure the delay is respected and the observable completes after one emission
-      tap(() => {
-        this.isVideoLoading = true; // Set video loading state to true when search starts
-      }),
-      concatMap(() => this.searchVideoItemsBasedOnPrompt(this.searchText)
+    const videoSearch$ = this.searchVideoItemsBasedOnPrompt(this.searchText)
         .pipe(
           map((data: any) => {
             try {
@@ -97,30 +95,33 @@ export class SearchDocComponent implements OnInit {
   
               if (!groupedItems) { return []; }
               this.searchedVideoItems = Object.values(groupedItems);
+              this.isResultLoading = false;
               return this.searchedVideoItems;
             } catch (error) {
               console.error('Error parsing video data:', error);
               this.searchedVideoItems = [];
+              this.isResultLoading = false;
               return this.searchedVideoItems;
             }
           }),
-          finalize(() => {
-            this.isVideoLoading = false;  // Set video loading state to false after completion
+          catchError(() => {
+            this.isResultLoading = false;
+            this.searchedVideoItems = [];
+    
+            return this.searchedVideoItems;
           })
-        )
-      )
-    );
+        );
   
-    // Debouncing to ensure the search triggers only after 500ms of no typing
-  const search$ = of(this.searchText).pipe(
-    debounceTime(500),
-    switchMap(() => concat(
-      documentSearch$,  // First document search
-      videoSearch$      // Then video search
-    ))
-  );
+    this.isResultLoading = true;
 
-  search$.subscribe();
+    if (this.currentSelectedTab === 0) {
+      documentSearch$.subscribe();
+    }
+
+    if(this.currentSelectedTab === 1) {
+      videoSearch$.subscribe();
+    }
+
   }
   
   onUpload() {

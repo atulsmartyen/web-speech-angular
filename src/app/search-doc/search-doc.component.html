@@ -15,15 +15,15 @@
     </button>
   </div>
 
-  <mat-tab-group>
+  <div class="loading-overlay" *ngIf="isResultLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-tab-group (selectedTabChange)="onSelectedTabChange($event)">
     <!-- Documents Tab -->
     <mat-tab label="Documents">
       <ng-template matTabContent>
-        <div class="loading-overlay" *ngIf="isDocLoading">
-          <mat-spinner></mat-spinner>
-          <p>Loading Documents...</p>
-        </div>
-        <mat-card *ngFor="let item of (searchedItems)" class="card-content" [class.loading]="isDocLoading">
+        <mat-card *ngFor="let item of (searchedDocItems)" class="card-content">
           <mat-card-header *ngIf="!!item">
             <img mat-card-md-image class="doc-img" src="../../assets/images/doc_logo.jpg">
             <mat-card-content>
@@ -42,11 +42,7 @@
     <!-- Videos Tab -->
     <mat-tab label="Videos">
       <ng-template matTabContent>
-        <div class="loading-overlay" *ngIf="isVideoLoading">
-          <mat-spinner></mat-spinner>
-          <p>Loading Videos...</p>
-        </div>
-        <mat-card *ngFor="let item of searchedVideoItems" class="card-content" [class.loading]="isVideoLoading">
+        <mat-card *ngFor="let item of searchedVideoItems" class="card-content">
           <mat-card-header *ngIf="!!item">
             <img mat-card-md-image class="doc-img" src="../../assets/images/video-thumbnail.jpg" (click)="navigateToVideoPlayer(item.time)">
             <mat-card-content>
